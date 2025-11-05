@@ -135,5 +135,16 @@ namespace Ex
             return Enum.GetValues(typeof(T)).Cast<T>().ToList();
         }
         #endregion
+
+        public static void ChangeAnim(this Animator tmpAnim, ref string tmpCurrent, string animID)
+        {
+            tmpAnim.ResetTrigger(tmpCurrent);
+            tmpCurrent = animID;
+            tmpAnim.SetTrigger(animID);
+        }
+        public static Vector3 ProjectOntoPlane(Vector3 a, Vector3 n)
+        {
+            return (a - Vector3.Project(a, n)).normalized;
+        }
     }
 }
