@@ -1,3 +1,9 @@
+public enum EGameState
+{
+    Loading,
+    Home,
+    Gameplay,
+}
 public enum ECharacterType
 {
     Char_1 = 0,

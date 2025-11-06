@@ -11,6 +11,12 @@ namespace Core
         public const string ANIM_JUMP = "Jump";
         public const string ANIM_ISGROUND = "IsGround";
         public const string ANIM_IDLE = "Idle";
+        public static string EVENT_GAMEPLAY_UPDATE_SCORE = "EVENT_GAMEPLAY_UPDATE_SCORE";
+        public const string TIMER_TICK_EVENT = "TIMER_TICK_EVENT";
+        public const string SCENE_LOADING = "LoadingScene";
+        public const string SCENE_MAIN_UI = "HomeScene";
+        public const string SCENE_GAME_PLAY = "GameScene";
+        public const string EVENT_CHEAT_MODE = "EVENT_CHEAT_MODE";
 
         public const float RotationSmoothTime = 5f;
         public const float SpeedChangeRate = 10.0f;
