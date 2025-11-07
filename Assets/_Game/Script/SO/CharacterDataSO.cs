@@ -3,28 +3,53 @@ using System.Collections.Generic;
 using Ex;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UIElements;
 namespace Config
 {
     [CreateAssetMenu(fileName = "CharacterDataSO", menuName = "Config/Data/CharacterDataSO")]
     public class CharacterDataSO : SerializedScriptableObject
     {
-        const string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzACtDdF_vLdersgFezPWRmNXz3vxJjSyLfEEJJbJWCJgwzAYZOhM5QpWeQlWuOlyJTGTWWU2st-DP/pub?gid=311581878&single=true&output=csv";
-        public Dictionary<ECharacterType, ConfigCharacter> dicCharacter;
+        public string url;
+        public ECharacterType type;
+        public int maxLevel;
+        public Dictionary<EStat, Vector2> dicMainStat;
+        public Dictionary<ESkillType, List<ConfigCharacterSkill>> dicSkill;
 
 #if UNITY_EDITOR
         [Button()]
         void LoadData()
         {
-            dicCharacter = new();
+            dicMainStat = new();
+            dicSkill = new();
             System.Action<string> readCharacterConfigAction = new((string str) =>
             {
                 var data = CSVReader.ReadCSV(str);
-                for (int j = 2; j < data.Count; j++)
+                ECharacterType type = data[2][0].ToEnum<ECharacterType>();
+                for (int j = 3; j < data.Count; j++)
                 {
                     var _data = data[j];
                     if (!string.IsNullOrEmpty(_data[0]))
                     {
-                        ReadConfig(_data[0], _data[1], _data[2], data[1], _data, 3, 4);
+                        if (_data[0] == "#MainStat")
+                        {
+                            if (_data[1].TryToEnum(out EStat eStat))
+                            {
+                                string jsonValue = _data[3];
+                                string[] splitValue = jsonValue.Split('/');
+                                Vector2 minMaxValue = new();
+                                minMaxValue.x = Extension.ParseFloat(splitValue[0]);
+                                minMaxValue.y = splitValue.Length > 1 ? Extension.ParseFloat(splitValue[1]) : 0f;
+                                dicMainStat.Add(eStat, minMaxValue);
+                            }
+                            else if (_data[1] == "MaxLevel")
+                            {
+                                maxLevel = _data[3].StringToInt();
+                            }
+                        }
+                        else
+                        {
+                            ReadConfigSkill(_data[0], _data[1], _data[2], _data, 3);
+                        }
                     }
                 }
 
@@ -33,38 +58,38 @@ namespace Config
             EditorCoroutine.start(Extension.IELoadData(url, readCharacterConfigAction));
         }
 
-        void ReadConfig(string id, string charName, string maxLevel, string[] arrStatType, string[] arrStatValue, int startIndex, int amountStat)
+        void ReadConfigSkill(string id, string skillType, string desc, string[] line, int startIndex)
         {
-            Dictionary<EStat, Vector2> dicStat = new();
-            ECharacterType type = id.ToEnum<ECharacterType>();
-            int maxLv = maxLevel.StringToInt();
-            for (int i = startIndex; i < startIndex + amountStat; i++)
+            List<string> info = new();
+            for (int i = startIndex; i < line.Length; i++)
             {
-                if (!string.IsNullOrEmpty(arrStatValue[i]))
+                if (!string.IsNullOrEmpty(line[i]))
                 {
-                    EStat stat = arrStatType[i].ToEnum<EStat>();
-                    string[] stringValue = arrStatValue[i].Split('/');
-                    Vector2 minMaxStat = new Vector2(Extension.ParseFloat(stringValue[0]), Extension.ParseFloat(stringValue[1]));
-                    dicStat.Add(stat, minMaxStat);
+                    info.Add(line[i]);
                 }
             }
-            ConfigCharacter config = new ConfigCharacter()
+            ESkillType eSkillType = skillType.ToEnum<ESkillType>();
+            ConfigCharacterSkill config = new ConfigCharacterSkill()
             {
-                type = type,
-                name = charName,
-                maxLevel = maxLv,
-                dicStat = dicStat
+                id = id,
+                skillType = eSkillType,
+                desc = desc,
+                info = info
             };
-            dicCharacter.Add(type, config);
+            if (!dicSkill.ContainsKey(eSkillType))
+            {
+                dicSkill.Add(eSkillType, new List<ConfigCharacterSkill>());
+            }
+            dicSkill[eSkillType].Add(config);
         }
 #endif
     }
     [System.Serializable]
-    public class ConfigCharacter
+    public class ConfigCharacterSkill
     {
-        public ECharacterType type;
-        public string name;
-        public int maxLevel;
-        public Dictionary<EStat, Vector2> dicStat;
+        public string id;
+        public ESkillType skillType;
+        public string desc;
+        public List<string> info;
     }
 }

@@ -21,3 +21,11 @@ public enum EWeaponType
     Weapon_1 = 0,
     Weapon_2 = 1,
 }
+public enum ESkillType
+{
+    NormalSkill = 0,
+    ESkill = 1,
+    QSkill = 2,
+    Passive = 3,
+    Talent = 4
+}
