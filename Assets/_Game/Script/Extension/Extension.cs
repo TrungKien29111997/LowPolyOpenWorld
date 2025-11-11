@@ -69,7 +69,6 @@ namespace Ex
         static Dictionary<Type, Dictionary<Enum, string>> dicEnumToString = new();
         static Dictionary<Type, Dictionary<string, object>> dicStringToEnum = new();
         static Dictionary<string, int> dicStringToInt = new();
-        static Dictionary<int, string> dicIntToString = new();
         public static int StringToInt(this string str)
         {
             if (!dicStringToInt.ContainsKey(str))
@@ -77,14 +76,6 @@ namespace Ex
                 dicStringToInt.Add(str, int.Parse(str));
             }
             return dicStringToInt[str];
-        }
-        public static string ExToString(this int val)
-        {
-            if (!dicIntToString.ContainsKey(val))
-            {
-                dicIntToString.Add(val, val.ToString());
-            }
-            return dicIntToString[val];
         }
 
         public static string ExToString(this Enum enumValue)

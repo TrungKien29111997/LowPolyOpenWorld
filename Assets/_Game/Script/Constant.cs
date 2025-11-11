@@ -13,6 +13,7 @@ namespace Core
         public const string ANIM_IDLE = "Idle";
         public static string EVENT_GAMEPLAY_UPDATE_SCORE = "EVENT_GAMEPLAY_UPDATE_SCORE";
         public const string TIMER_TICK_EVENT = "TIMER_TICK_EVENT";
+        public const string EVENT_ON_NEW_DAY = "EVENT_ON_NEW_DAY";
         public const string SCENE_LOADING = "LoadingScene";
         public const string SCENE_MAIN_UI = "HomeScene";
         public const string SCENE_GAME_PLAY = "GameScene";

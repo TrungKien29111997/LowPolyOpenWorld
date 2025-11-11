@@ -82,6 +82,14 @@ namespace Core
         {
             GameState = state;
         }
+        public void SaveLocalData(string key, string value)
+        {
+            PlayerPrefs.SetString(key, value);
+        }
+        public string GetLocalData(string key)
+        {
+            return PlayerPrefs.GetString(key);
+        }
         #region Scene Control
         public void GoSceneHome(Transform focusTransform = null)
         {

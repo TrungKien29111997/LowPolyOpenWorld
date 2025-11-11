@@ -29,3 +29,15 @@ public enum ESkillType
     Passive = 3,
     Talent = 4
 }
+public enum ECommonResource
+{
+    Coin = 0,
+    Star = 1
+}
+public enum ERarity
+{
+    Common = 0,
+    Rare = 1,
+    Epic = 2,
+    Mythic = 3,
+}
