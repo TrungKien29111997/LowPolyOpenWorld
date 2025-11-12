@@ -17,6 +17,18 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 17be9059bbc100e41b0cafa8739ad799
   m_SerializeEntries:
+  - m_GUID: 80b6d68e0437e994a8e1e47edefc0191
+    m_Address: Assets/_Game/SO/Config/CoinSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CommonResourceSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95ca4bea48b1995428425c0e2595916a
+    m_Address: Assets/_Game/Prefab/UI/Canvas_Home.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UIPrefab
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b945cf0a59a5d724b9b1f33da315047b
     m_Address: Assets/_Game/Weapon/Sword2/Weapon2.asset
     m_ReadOnly: 0
@@ -28,6 +40,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - WeaponSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7c98d7845d44ce4db4dd9c0b6f97e14
+    m_Address: Assets/_Game/SO/Config/StarSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CommonResourceSO
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9878b55615fc9cf449820d746385c7ea, type: 2}

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ex;
 using UnityEngine;
 
 namespace Core.UI
 {
     public class UIManager : Singleton<UIManager>
     {
-        Dictionary<System.Type, UICanvas> dicCanvasActives = new();
-        Dictionary<System.Type, UICanvas> dicCanvasPrefabs = new();
+        Dictionary<System.Type, UICanvas> dicCanvasActives, dicCanvasPrefabs;
 
         Transform parent;
         Transform GetParentCanvas()
@@ -18,13 +18,22 @@ namespace Core.UI
             }
             return parent;
         }
-        public override void Awake()
+        public IEnumerator IEInit(System.Action onComplete = null)
         {
-            base.Awake();
-            // DataSystem.Instance.uiSO.prefabCanvas.ForEach(x =>
-            // {
-            //     dicCanvasPrefabs.Add(x.GetType(), x);
-            // });
+            dicCanvasActives = new();
+            return Extension.LoadListByLabel<GameObject>(
+                Constant.ADDRESSABLES_LABEL_UI_PREFAB_SO,
+                x =>
+                {
+                    dicCanvasPrefabs = new();
+                    foreach (var item in x)
+                    {
+                        UICanvas canvas = item.GetComponent<UICanvas>();
+                        dicCanvasPrefabs.Add(canvas.GetType(), canvas);
+                    }
+                    onComplete?.Invoke();
+                }
+            );
         }
         // open canvas
         public T OpenUI<T>() where T : UICanvas

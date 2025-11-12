@@ -112,9 +112,6 @@ namespace Core.Data
         // Dung de khoi tao khi bat dau game, vi du generate cac dictionary
         public abstract void FirstTimeInit();
         // Khoi tao data moi hoan toan khi khong co data truoc do
-        public virtual void OnNewData()
-        {
-
-        }
+        public abstract void OnNewData();
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 17be9059bbc100e41b0cafa8739ad799
   m_currentHash:
     serializedVersion: 2
-    Hash: 263071befb92b17a4eec888aa856c96a
+    Hash: faa864bde0799e69e55e685f5e08974d
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -88,6 +88,8 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - WeaponSO
+    - CommonResourceSO
+    - UIPrefab
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 7b9bc9f4329bea0409a0b93dc3a61b82, type: 2}

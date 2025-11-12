@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
 namespace Ex
 {
     public static class Extension
@@ -136,6 +139,31 @@ namespace Ex
         public static Vector3 ProjectOntoPlane(Vector3 a, Vector3 n)
         {
             return (a - Vector3.Project(a, n)).normalized;
+        }
+        public static IEnumerator LoadListByLabel<T>(
+            string label,
+            Action<List<T>> onCompleted,
+            Action<T> onEachLoaded = null)
+        {
+            var handle = Addressables.LoadAssetsAsync<T>(label, onEachLoaded);
+
+            // Đợi cho đến khi load xong
+            yield return handle;
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                var list = new List<T>(handle.Result);
+                onCompleted?.Invoke(list);
+            }
+            else
+            {
+                Debug.LogError($"❌ LoadListByLabel<{typeof(T).Name}> Fail (label: {label})");
+                onCompleted?.Invoke(new List<T>());
+            }
+        }
+        public static string GetUID()
+        {
+            return System.Guid.NewGuid().ToString();
         }
     }
 }

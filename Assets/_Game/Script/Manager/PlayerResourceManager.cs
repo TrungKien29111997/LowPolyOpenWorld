@@ -1,29 +1,57 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ex;
 using UnityEngine;
 namespace Core.Data
 {
-    public class PlayerResourceManager : MonoBehaviour
+    public interface IPlayerResource : IController<IPlayerResource>
     {
+        public static IPlayerResource Instance = new PlayerResourceManager();
+        public void AddResource(List<BaseGameResource> lstResource, EResourceFrom resourceFrom, bool updateSever = false, Action actionSuccess = null, Action actionError = null);
+        public int GetCommonResource(ECommonResource resouceType);
+    }
 
+    public class PlayerResourceManager : BaseLocalController<PlayerResourceManager, PlayerResourceData>, IPlayerResource
+    {
+        public override string KeyData => "PlayerResourceJsonData";
+
+        public override string KeyEvent => Constant.EVENT_CHANGE_PLAYER_RESOURCE;
+
+        public void AddResource(List<BaseGameResource> lstResource, EResourceFrom resourceFrom, bool updateSever = false, Action actionSuccess = null, Action actionError = null)
+        {
+            cachedData.AddResource(lstResource);
+            OnValueChange();
+            // if (cachedData.AddResource(lstResource))
+            // {
+            //     OnValueChange();
+            //     actionSuccess?.Invoke();
+            // }
+            // else
+            // {
+            //     //UIManager.Instance.ShowDialog("Not Enough Resources");
+            //     actionError?.Invoke();
+            // }
+        }
+        public int GetCommonResource(ECommonResource resouceType)
+        {
+            return cachedData.GetCommonResource(resouceType);
+        }
     }
     [System.Serializable]
     public class PlayerResourceData : ControllerCachedData
     {
         Dictionary<ECommonResource, int> _commonResources;
-        public Dictionary<string, int> dicItemResource = new();
+        public Dictionary<string, int> dicItemResource;
         //List<ItemResource> lstVisuals = new();
         public override void OnNewData()
         {
-            base.OnNewData();
             dicItemResource = new();
             List<ECommonResource> lstCommon = Extension.GetListEnum<ECommonResource>();
             foreach (var item in lstCommon)
             {
-                string key = "cm" + item.ExToString();
-                if (!dicItemResource.ContainsKey(key))
-                    dicItemResource.Add(key, 0);
+                string key = $"CMR_{item.ExToString()}";
+                dicItemResource.Add(key, 0);
             }
         }
         public override void FirstTimeInit()
@@ -31,8 +59,29 @@ namespace Core.Data
             _commonResources = new();
             foreach (var item in dicItemResource)
             {
-                _commonResources.Add(item.Key.ToEnum<ECommonResource>(), item.Value);
+                string[] split = item.Key.Split("_");
+                if (split[0] == "CMR")
+                {
+                    _commonResources.Add(split[1].ToEnum<ECommonResource>(), item.Value);
+                }
             }
+        }
+        public void AddResource(List<BaseGameResource> lstResource)
+        {
+            lstResource.ForEach(resource =>
+            {
+                if (resource is CommonResource)
+                {
+                    CommonResource cr = (CommonResource)resource;
+                    _commonResources[cr.type] += cr.amount;
+                    string key = $"CMR_{cr.type.ExToString()}";
+                    dicItemResource[key] = _commonResources[cr.type];
+                }
+            });
+        }
+        public int GetCommonResource(ECommonResource resouceType)
+        {
+            return _commonResources[resouceType];
         }
         // bool CheckResource(GameResource resource)
         // {
@@ -100,16 +149,6 @@ namespace Core.Data
         //                     break;
         //                 }
         //             }
-        //         }
-        //     return isCheck;
-        // }
-        // public bool AddResource(List<BaseGameResource> lstResource)
-        // {
-        //     bool isCheck = CheckListResource(lstResource);
-        //     if (isCheck)
-        //         foreach (BaseGameResource resource in lstResource)
-        //         {
-        //             AddResource(resource);
         //         }
         //     return isCheck;
         // }
