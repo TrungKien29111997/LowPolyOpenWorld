@@ -17,35 +17,59 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 17be9059bbc100e41b0cafa8739ad799
   m_SerializeEntries:
+  - m_GUID: 06589ced0a7ddea4a8179740e602e728
+    m_Address: Assets/_Game/SO/Config/Weapon/Wep 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WeaponSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4981447f982f1914eb222a37c1f25dfe
+    m_Address: Assets/_Game/SO/Config/Artifact/AIT 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ArtifactSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6728c96ba1b65f440b7c8af353b35cb4
+    m_Address: Assets/_Game/Prefab/UI/Canvas_Gameplay.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UIPrefab
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 80b6d68e0437e994a8e1e47edefc0191
     m_Address: Assets/_Game/SO/Config/CoinSO.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - CommonResourceSO
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 95ca4bea48b1995428425c0e2595916a
-    m_Address: Assets/_Game/Prefab/UI/Canvas_Home.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UIPrefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b945cf0a59a5d724b9b1f33da315047b
-    m_Address: Assets/_Game/Weapon/Sword2/Weapon2.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - WeaponSO
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bf13f5b2799f6ca46904e07d8f0c898c
-    m_Address: Assets/_Game/Weapon/Sword1/WeaponSO.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - WeaponSO
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c7c98d7845d44ce4db4dd9c0b6f97e14
     m_Address: Assets/_Game/SO/Config/StarSO.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - CommonResourceSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8f6c9f74701b9d4298f9029b2f36b6a
+    m_Address: Assets/_Game/Prefab/UI/Canvas_Inventory.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UIPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2129872e0597c24b9277946098bcbaf
+    m_Address: Assets/_Game/Prefab/UI/Canvas_Menu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UIPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed601d66c9e996b4dbdaed5f05d32b9a
+    m_Address: Assets/_Game/SO/Config/Weapon/Wep 2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WeaponSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe232f5c53088e142b4146ad2d7f815a
+    m_Address: Assets/_Game/SO/Config/Artifact/AIT 2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ArtifactSO
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9878b55615fc9cf449820d746385c7ea, type: 2}

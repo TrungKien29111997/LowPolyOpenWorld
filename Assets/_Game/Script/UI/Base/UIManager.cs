@@ -7,17 +7,10 @@ namespace Core.UI
 {
     public class UIManager : Singleton<UIManager>
     {
+        Transform tf;
+        public Transform TF {get {return tf ??= transform;} }
         Dictionary<System.Type, UICanvas> dicCanvasActives, dicCanvasPrefabs;
 
-        Transform parent;
-        Transform GetParentCanvas()
-        {
-            if (parent == null)
-            {
-                parent = GameObject.FindObjectOfType<UIParent>().transform;
-            }
-            return parent;
-        }
         public IEnumerator IEInit(System.Action onComplete = null)
         {
             dicCanvasActives = new();
@@ -83,7 +76,7 @@ namespace Core.UI
                 }
                 if (dicCanvasActives[type] == null)
                 {
-                    dicCanvasActives[type] = Instantiate(dicCanvasPrefabs[type], GetParentCanvas());
+                    dicCanvasActives[type] = Instantiate(dicCanvasPrefabs[type], TF);
                 }
             }
             return dicCanvasActives[typeof(T)] as T;

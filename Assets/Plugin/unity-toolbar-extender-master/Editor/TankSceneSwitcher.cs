@@ -44,10 +44,13 @@ public static class TankSceneSwitcher
         {
             SceneHelper.StartScene("LoadingScene");
         }
-
         if (GUILayout.Button(new GUIContent("HomeScene"), ToolbarStyles.commandButtonStyle))
         {
             SceneHelper.StartScene("HomeScene");
+        }
+        if (GUILayout.Button(new GUIContent("UIScene"), ToolbarStyles.commandButtonStyle))
+        {
+            SceneHelper.StartScene("UIScene");
         }
     }
 

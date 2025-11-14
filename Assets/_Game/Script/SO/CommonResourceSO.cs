@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Ex;
+using Core;
 namespace Config
 {
     [CreateAssetMenu(fileName = "CommonResourceSO", menuName = "Config/Ref/CommonResourceSO")]
@@ -20,9 +21,9 @@ namespace Config
         {
             return string.Empty;
         }
-        public Color GetBGColor()
+        public Sprite GetBGImg()
         {
-            return Color.white;
+            return DataSystem.Instance.dataGeneral.dicRarityBG[rarity];
         }
     }
 }

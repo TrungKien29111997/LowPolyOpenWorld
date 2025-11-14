@@ -7,48 +7,60 @@ namespace Core.Data
 {
     public abstract class BaseGameResource
     {
-        public static BaseGameResource GetResource(string input)
+        public static BaseGameResource ParseExistResource(string input)
         {
             string[] resourceData = input.Split("|");
-            // switch (resourceData[0])
-            // {
-            //     case "CMR":
-            //         if (resourceData[1].TryToEnum(out ECommonResource resourceCommon))
-            //         {
-            //             int resouceValue = resourceData[2].StringToInt();
-            //             return new CommonResource(resourceCommon, resouceValue);
-            //         }
-            //         break;
-            //     case "EQM":
-            //         if (resourceData[1].TryToEnum(out ERarity equipmentRarity))
-            //         {
-            //             if (resourceData.Length <= 4)
-            //             {
-            //                 return new EquipmentResource(equipmentRarity, resourceData[2], DataSystem.Instance.dataEquipment.dicEquipmentConfig[resourceData[2]].type);
-            //             }
-            //             else
-            //             {
-            //                 return new EquipmentResource(equipmentRarity, resourceData[2], DataSystem.Instance.dataEquipment.dicEquipmentConfig[resourceData[2]].type, resourceData[4]);
-            //             }
-            //         }
-            //         break;
-            //     case "AIT":
-            //         if (Helper.TryToEnum(resourceData[1], out EArtifact eArtifact))
-            //         {
-            //             if (DataSystem.Instance.dataArtifact.dicArtifactConfig.ContainsKey(eArtifact))
-            //             {
-            //                 return new ArtifactResource(eArtifact);
-            //             }
-            //         }
-            //         break;
-            // }
+            switch (resourceData[0])
+            {
+                case Constant.RESORUCE_CODE_COMMON_RESOURCE:
+                    if (resourceData[1].TryToEnum(out ECommonResource resourceCommon))
+                    {
+                        int resouceValue = resourceData[2].StringToInt();
+                        CommonResource commonResource = new CommonResource()
+                        {
+                            type = resourceCommon,
+                            amount = resouceValue
+                        };
+                        return commonResource;
+                    }
+                    return null;
+                case Constant.RESORUCE_CODE_EQUIPMENT_RESOURCE:
+                    if (resourceData[1].TryToEnum(out EWeaponType equipmentType))
+                    {
+                        EquipmentResource equipmentResource = new EquipmentResource()
+                        {
+                            typeId = equipmentType,
+                            uid = resourceData[2],
+                            level = resourceData[3].StringToInt()
+                        };
+                        return equipmentResource;
+                    }
+                    return null;
+                case Constant.RESORUCE_CODE_ARTIFACT_RESOURCE:
+                    if (resourceData[1].TryToEnum(out EArtifactType eArtifact))
+                    {
+                        ArtifactResource artifactResource = new ArtifactResource()
+                        {
+                            typeId = eArtifact,
+                            uid = resourceData[2],
+                            rarity = resourceData[3].ToEnum<ERarity>(),
+                            level = resourceData[4].StringToInt()
+                        };
+                        return artifactResource;
+                    }
+                    return null;
+            }
 
             Debug.LogError($"Null Parse Resource, {input}");
             return null;
         }
+        public static BaseGameResource ParseNewResource(string input)
+        {
+            return null;
+        }
         public abstract bool IsVisualInInventory { get; }
         public abstract Sprite GetIcon();
-        public abstract Color GetBGColor();
+        public abstract Sprite GetBGImg();
         public abstract string GetName();
         public abstract string GetDesc();
         public abstract string GetTextValue();
@@ -78,6 +90,10 @@ namespace Core.Data
         {
             return config.GetDesc();
         }
+        public string GetJsonData()
+        {
+            return $"{type.ExToString()}|{amount}";
+        }
         // public override List<GameResource> CorrectValue()
         // {
         //     return new List<GameResource> { this };
@@ -92,9 +108,9 @@ namespace Core.Data
 
         //     return false;
         // }
-        public override Color GetBGColor()
+        public override Sprite GetBGImg()
         {
-            return config.GetBGColor();
+            return config.GetBGImg();
         }
         public ERarity GetRarity()
         {
@@ -120,14 +136,21 @@ namespace Core.Data
     {
         public string uid;
         public EWeaponType typeId;
+        public ERarity rarity => DataSystem.Instance.dataWeapon.dicWeapon[typeId].rarity;
         public int level;
         WeaponSO config => DataSystem.Instance.dicConfigRefWeapon[typeId];
 
-        public override bool IsVisualInInventory => config.IsVisualInInventory;
-
-        public override Color GetBGColor()
+        public override bool IsVisualInInventory => true;
+        public void CreateNew(EWeaponType typeId)
         {
-            return config.GetBGColor();
+            this.typeId = typeId;
+            uid = Ex.Extension.GetUID();
+            level = 1;
+        }
+
+        public override Sprite GetBGImg()
+        {
+            return DataSystem.Instance.dataGeneral.dicRarityBG[rarity];
         }
 
         public override string GetDesc()
@@ -212,5 +235,53 @@ namespace Core.Data
         //         lstUniqueStats[i].ApplyStat(stats, keyGlobal, typeId + lstUniqueStats[i].type.ToString());
         //     }
         // }
+    }
+    [System.Serializable]
+    public class ArtifactResource : BaseGameResource
+    {
+        public string uid;
+        public EArtifactType typeId;
+        public ERarity rarity;
+        public int level;
+        ArtifactSO config => DataSystem.Instance.dicConfigRefArtifact[typeId];
+
+        public override bool IsVisualInInventory => true;
+        public void CreateNew(EArtifactType typeId, ERarity rarity)
+        {
+            this.typeId = typeId;
+            uid = Ex.Extension.GetUID();
+            this.rarity = rarity;
+            level = 1;
+        }
+
+        public override Sprite GetBGImg()
+        {
+            return DataSystem.Instance.dataGeneral.dicRarityBG[rarity];
+        }
+
+        public override string GetDesc()
+        {
+            return config.GetDesc();
+        }
+
+        public override Sprite GetIcon()
+        {
+            return config.icon;
+        }
+
+        public string GetJsonData()
+        {
+            return $"{typeId.ExToString()}|{uid}|{rarity.ExToString()}|{level}";
+        }
+
+        public override string GetName()
+        {
+            return config.GetName();
+        }
+
+        public override string GetTextValue()
+        {
+            return config.GetTextValue();
+        }
     }
 }

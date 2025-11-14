@@ -1,29 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core;
 using Core.Data;
 using Core.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Ex;
 
 namespace UI
 {
-    public class CanvasHome : UICanvas
+    public class CanvasHome : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI txtCoin;
-        public override void SetUp()
+        [SerializeField] Button butGoSceneGameplay;
+        void Start()
         {
-            base.SetUp();
-            Ex.EventManager.StartListening(Constant.EVENT_CHANGE_PLAYER_RESOURCE, ReloadCoin);
+            EventManager.StartListening(Constant.EVENT_CHANGE_PLAYER_RESOURCE, ReloadCoin);
             ReloadCoin();
+            butGoSceneGameplay.SetButton(ButtonGoSceneGameplay);
         }
-        public override void Close()
+        void ButtonGoSceneGameplay()
         {
-            base.Close();
+            GameManager.Instance.GoSceneGameplay();
+        }
+        void OnDestroy()
+        {
             Ex.EventManager.StopListening(Constant.EVENT_CHANGE_PLAYER_RESOURCE, ReloadCoin);
         }
         void ReloadCoin()
         {
-            txtCoin.text = $"Coin: {IPlayerResource.Instance.GetCommonResource(ECommonResource.Coin)}";
+            txtCoin.text = $"Coin: {IPlayerResourceManager.Instance.GetCommonResource(ECommonResource.Coin)}";
         }
     }
 }

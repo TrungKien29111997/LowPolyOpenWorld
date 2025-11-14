@@ -45,15 +45,14 @@ namespace Core
             yield return DataSystem.Instance.IEInit();
             DebugCustom.LogColor("DataSystem load done");
 
-            yield return new WaitUntil(() => UIManager.Instance);
-            yield return UIManager.Instance.IEInit();
-            DebugCustom.LogColor("UIManager load done");
             yield return IELoading();
 
-            yield return StartCoroutine(IPlayerResource.Instance.IEInit());
+            yield return StartCoroutine(IPlayerResourceManager.Instance.IEInit());
+            yield return StartCoroutine(IEquipmentResourceManager.Instance.IEInit());
+            yield return StartCoroutine(IArtifactResourceManager.Instance.IEInit());
 
             // yield return StartCoroutine(ITimerController.Instance.IEInit());
-            // yield return StartCoroutine(IArtifactController.Instance.IEInit());
+
             // yield return StartCoroutine(IAchievementController.Instance.IEInit());
             // yield return StartCoroutine(IEquipmentController.Instance.IEInit());
             // yield return StartCoroutine(IGachaController.Instance.IEInit());

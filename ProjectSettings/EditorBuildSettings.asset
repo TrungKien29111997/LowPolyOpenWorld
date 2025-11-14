@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/GachaScene.unity
     guid: 3b2021961afafb546b286b92dd0457c6
+  - enabled: 1
+    path: Assets/_Game/Scenes/UIScene.unity
+    guid: bfee69259df4d2f4f93517086b29ca43
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: d795e06b2d3f3704383284a76bb8f0bb, type: 2}

@@ -33,11 +33,11 @@ namespace Config
             EditorCoroutine.start(Extension.IELoadData(url, readCharacterConfigAction));
         }
 
-        void ReadConfig(string id, string charName, string maxLevel, string[] arrStatType, string[] arrStatValue, int startIndex, int amountStat)
+        void ReadConfig(string id, string charName, string rarity, string[] arrStatType, string[] arrStatValue, int startIndex, int amountStat)
         {
             Dictionary<EStat, Vector2> dicStat = new();
             EWeaponType type = id.ToEnum<EWeaponType>();
-            int maxLv = maxLevel.StringToInt();
+            ERarity eRarity = rarity.ToEnum<ERarity>();
             for (int i = startIndex; i < startIndex + amountStat; i++)
             {
                 if (!string.IsNullOrEmpty(arrStatValue[i]))
@@ -52,7 +52,7 @@ namespace Config
             {
                 type = type,
                 name = charName,
-                maxLevel = maxLv,
+                rarity = eRarity,
                 dicStat = dicStat
             };
             dicWeapon.Add(type, config);
@@ -64,7 +64,7 @@ namespace Config
     {
         public EWeaponType type;
         public string name;
-        public int maxLevel;
+        public ERarity rarity;
         public Dictionary<EStat, Vector2> dicStat;
     }
 }

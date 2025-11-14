@@ -4,6 +4,11 @@ public enum EGameState
     Home,
     Gameplay,
 }
+public enum EDirectScreen
+{
+    Portrait = 0,
+    Landscape = 1
+}
 public enum ECharacterType
 {
     Char_1 = 0,
@@ -20,6 +25,11 @@ public enum EWeaponType
 {
     Weapon_1 = 0,
     Weapon_2 = 1,
+}
+public enum EArtifactType
+{
+    Artifact_1 = 0,
+    Artifact_2 = 1,
 }
 public enum ESkillType
 {

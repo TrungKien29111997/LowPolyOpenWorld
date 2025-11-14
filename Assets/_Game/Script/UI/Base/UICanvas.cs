@@ -35,13 +35,13 @@ namespace Core.UI
                 RecTF.offsetMax = rightTop;
             }
         }
-
+        EDirectScreen directScreen => DataSystem.Instance.dataGameSetting.directScreen;
         // goi truoc khi canvas duoc active
         public virtual void SetUp()
         {
             SetLeft(0);
             SetRight(0);
-            SetTop(100);
+            SetTop(directScreen == EDirectScreen.Portrait ? 100 : 0);
             SetBottom(0);
         }
 

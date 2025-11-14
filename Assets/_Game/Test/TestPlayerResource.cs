@@ -16,7 +16,23 @@ public class TestPlayerResource : MonoBehaviour
             amount = 1000
         };
         List<BaseGameResource> lstResource = new List<BaseGameResource>() { testCoint };
-        IPlayerResource.Instance.AddResource(lstResource, EResourceFrom.Hack);
+        IPlayerResourceManager.Instance.AddResource(lstResource, EResourceFrom.Hack);
     }
-    #endif
+    [Button]
+    void HackEquipment(EWeaponType eWeapon)
+    {
+        EquipmentResource testEquipment = new EquipmentResource();
+        testEquipment.CreateNew(eWeapon);
+        List<BaseGameResource> lstResource = new List<BaseGameResource>() { testEquipment };
+        IEquipmentResourceManager.Instance.AddResource(lstResource, EResourceFrom.Hack);
+    }
+    [Button]
+    void HackArtifact(EArtifactType eArtifact)
+    {
+        ArtifactResource testArtifact = new ArtifactResource();
+        testArtifact.CreateNew(eArtifact, ERarity.Mythic);
+        List<BaseGameResource> lstResource = new List<BaseGameResource>() { testArtifact };
+        IArtifactResourceManager.Instance.AddResource(lstResource, EResourceFrom.Hack);
+    }
+#endif
 }

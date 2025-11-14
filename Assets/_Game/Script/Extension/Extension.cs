@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 namespace Ex
 {
@@ -163,7 +164,16 @@ namespace Ex
         }
         public static string GetUID()
         {
-            return System.Guid.NewGuid().ToString();
+            return Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                    .Replace("/", "_")   // tránh ký tự gây lỗi JSON/URL
+                    .Replace("+", "-")   // tránh ký tự đặc biệt
+                    .Replace("|", "_")   // tránh ký tự đặc biệt
+                    .Substring(0, 22);
+        }
+        public static void SetButton(this Button button, Action onClick)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => onClick?.Invoke());
         }
     }
 }

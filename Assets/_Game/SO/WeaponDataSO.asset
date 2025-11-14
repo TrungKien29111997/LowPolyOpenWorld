@@ -56,9 +56,9 @@ MonoBehaviour:
     - Name: name
       Entry: 1
       Data: Sword1
-    - Name: maxLevel
+    - Name: rarity
       Entry: 3
-      Data: 50
+      Data: 3
     - Name: dicStat
       Entry: 7
       Data: 3|System.Collections.Generic.Dictionary`2[[EStat, Assembly-CSharp],[UnityEngine.Vector2,
@@ -148,9 +148,9 @@ MonoBehaviour:
     - Name: name
       Entry: 1
       Data: Gun1
-    - Name: maxLevel
+    - Name: rarity
       Entry: 3
-      Data: 40
+      Data: 3
     - Name: dicStat
       Entry: 7
       Data: 6|System.Collections.Generic.Dictionary`2[[EStat, Assembly-CSharp],[UnityEngine.Vector2,

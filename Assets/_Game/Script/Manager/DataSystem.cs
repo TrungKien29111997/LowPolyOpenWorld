@@ -10,6 +10,11 @@ namespace Core
     {
         [ShowInInspector] public Dictionary<ECommonResource, CommonResourceSO> dicConfigRefCommonResource;
         [ShowInInspector] public Dictionary<EWeaponType, WeaponSO> dicConfigRefWeapon;
+        [ShowInInspector] public Dictionary<EArtifactType, ArtifactSO> dicConfigRefArtifact;
+        public WeaponDataSO dataWeapon;
+        public ArtifactDataSO dataArtifact;
+        public GeneralSO dataGeneral;
+        public GameSettingSO dataGameSetting;
         int coroutineRemain;
         public IEnumerator IEInit()
         {
@@ -17,6 +22,7 @@ namespace Core
 
             listLoadCoroutine.Add(IELoadCommonResourceConfigRefSO(() => coroutineRemain--));
             listLoadCoroutine.Add(IELoadWeaponResourceConfigRefSO(() => coroutineRemain--));
+            listLoadCoroutine.Add(IELoadArtifactResourceConfigRefSO(() => coroutineRemain--));
 
             coroutineRemain = listLoadCoroutine.Count;
             listLoadCoroutine.ForEach(x => StartCoroutine(x));
@@ -47,6 +53,21 @@ namespace Core
                     foreach (var item in x)
                     {
                         dicConfigRefWeapon.Add(item.type, item);
+                    }
+                    onComplete?.Invoke();
+                }
+            );
+        }
+        IEnumerator IELoadArtifactResourceConfigRefSO(System.Action onComplete = null)
+        {
+            return Extension.LoadListByLabel<ArtifactSO>(
+                Constant.ADDRESSABLES_LABEL_ARTIFACT_SO,
+                x =>
+                {
+                    dicConfigRefArtifact = new();
+                    foreach (var item in x)
+                    {
+                        dicConfigRefArtifact.Add(item.type, item);
                     }
                     onComplete?.Invoke();
                 }
